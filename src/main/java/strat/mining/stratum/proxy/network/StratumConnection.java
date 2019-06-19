@@ -52,6 +52,8 @@ import strat.mining.stratum.proxy.json.MiningSubmitRequest;
 import strat.mining.stratum.proxy.json.MiningSubmitResponse;
 import strat.mining.stratum.proxy.json.MiningSubscribeRequest;
 import strat.mining.stratum.proxy.json.MiningSubscribeResponse;
+import strat.mining.stratum.proxy.json.MiningConfigRequest;
+import strat.mining.stratum.proxy.json.MiningConfigResponse;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -315,6 +317,11 @@ public abstract class StratumConnection implements Connection {
             MiningSubmitResponse submitResponse = new MiningSubmitResponse(response);
             onSubmitResponse(submitRequest, submitResponse);
             break;
+		case MiningConfigRequest.METHOD_NAME:
+			MiningConfigRequest configRequest = new MiningConfigRequest(request);
+			MiningConfigResponse configResponse = new MiningConfigResponse(response);
+			onConfigResponse(configRequest, configResponse);
+			break;
 
         case MiningExtranonceSubscribeRequest.METHOD_NAME:
             MiningExtranonceSubscribeRequest subscribeExtranonceRequest = new MiningExtranonceSubscribeRequest(request);
@@ -354,6 +361,10 @@ public abstract class StratumConnection implements Connection {
             MiningSubmitRequest submitRequest = new MiningSubmitRequest(request);
             onSubmitRequest(submitRequest);
             break;
+		case MiningConfigRequest.METHOD_NAME:
+			MiningConfigRequest configRequest = new MiningConfigRequest(request);
+			onConfigRequest(configRequest);
+			break;
 
         case MiningExtranonceSubscribeRequest.METHOD_NAME:
             MiningExtranonceSubscribeRequest extranonceSubscribeRequest = new MiningExtranonceSubscribeRequest(request);
@@ -448,6 +459,7 @@ public abstract class StratumConnection implements Connection {
      * Called when a submit request is received
      */
     protected abstract void onSubmitRequest(MiningSubmitRequest request);
+	protected abstract void onConfigRequest(MiningConfigRequest request);
 
     /**
      * Called when a extranonce subcribe request is received
@@ -483,6 +495,7 @@ public abstract class StratumConnection implements Connection {
      * Called when a submit response is received
      */
     protected abstract void onSubmitResponse(MiningSubmitRequest request, MiningSubmitResponse response);
+	protected abstract void onConfigResponse(MiningConfigRequest request, MiningConfigResponse response);
 
     /**
      * Called when a client getVersion response is received

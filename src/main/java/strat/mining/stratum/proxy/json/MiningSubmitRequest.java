@@ -39,6 +39,8 @@ public class MiningSubmitRequest extends JsonRpcRequest {
 	private String ntime;
 	@JsonIgnore
 	private String nonce;
+	@JsonIgnore
+	private String version;
 
 	public MiningSubmitRequest() {
 		super(METHOD_NAME);
@@ -87,6 +89,13 @@ public class MiningSubmitRequest extends JsonRpcRequest {
 	public void setNonce(String nonce) {
 		this.nonce = nonce;
 	}
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
+	}
 
 	@Override
 	public List<Object> getParams() {
@@ -98,6 +107,7 @@ public class MiningSubmitRequest extends JsonRpcRequest {
 			params.add(extranonce2);
 			params.add(ntime);
 			params.add(nonce);
+			params.add(version);
 		}
 		return super.getParams();
 	}
@@ -111,6 +121,7 @@ public class MiningSubmitRequest extends JsonRpcRequest {
 			extranonce2 = (String) params.get(2);
 			ntime = (String) params.get(3);
 			nonce = (String) params.get(4);
+			version = (String) params.get(5);
 		}
 	}
 

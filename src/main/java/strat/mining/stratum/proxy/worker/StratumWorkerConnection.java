@@ -51,6 +51,8 @@ import strat.mining.stratum.proxy.json.MiningSetDifficultyNotification;
 import strat.mining.stratum.proxy.json.MiningSetExtranonceNotification;
 import strat.mining.stratum.proxy.json.MiningSubmitRequest;
 import strat.mining.stratum.proxy.json.MiningSubmitResponse;
+import strat.mining.stratum.proxy.json.MiningConfigRequest;
+import strat.mining.stratum.proxy.json.MiningConfigResponse;
 import strat.mining.stratum.proxy.json.MiningSubscribeRequest;
 import strat.mining.stratum.proxy.json.MiningSubscribeResponse;
 import strat.mining.stratum.proxy.manager.ProxyManager;
@@ -264,6 +266,16 @@ public class StratumWorkerConnection extends StratumConnection implements Worker
     }
 
     @Override
+    protected void onConfigRequest(MiningConfigRequest request) {
+        MiningConfigResponse response = new MiningConfigResponse();
+        response.setId(request.getId());
+ 
+   		LOGGER.info("Worker {} send a Config request.", getConnectionName());
+    	sendResponse(response);
+  
+	}
+
+    @Override
     protected void onExtranonceSubscribeRequest(MiningExtranonceSubscribeRequest request) {
         this.isSetExtranonceNotificationSupported = true;
 
@@ -353,6 +365,10 @@ public class StratumWorkerConnection extends StratumConnection implements Worker
     protected void onSubscribeResponse(MiningSubscribeRequest request, MiningSubscribeResponse response) {
         LOGGER.warn("Worker {} send a Subscribe response. This should not happen.", getConnectionName());
     }
+	@Override
+	protected void onConfigResponse(MiningConfigRequest request, MiningConfigResponse response) {
+		LOGGER.warn("Worker {} send a Config response. This should not happen.", getConnectionName());
+	}
 
     @Override
     protected void onSubmitResponse(MiningSubmitRequest request, MiningSubmitResponse response) {

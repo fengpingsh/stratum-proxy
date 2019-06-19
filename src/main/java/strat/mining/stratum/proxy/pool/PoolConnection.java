@@ -38,6 +38,8 @@ import strat.mining.stratum.proxy.json.MiningSetDifficultyNotification;
 import strat.mining.stratum.proxy.json.MiningSetExtranonceNotification;
 import strat.mining.stratum.proxy.json.MiningSubmitRequest;
 import strat.mining.stratum.proxy.json.MiningSubmitResponse;
+import strat.mining.stratum.proxy.json.MiningConfigRequest;
+import strat.mining.stratum.proxy.json.MiningConfigResponse;
 import strat.mining.stratum.proxy.json.MiningSubscribeRequest;
 import strat.mining.stratum.proxy.json.MiningSubscribeResponse;
 import strat.mining.stratum.proxy.network.StratumConnection;
@@ -108,6 +110,11 @@ public class PoolConnection extends StratumConnection {
         LOGGER.warn("Pool {} received an Submit request. This should not happen.", pool.getName());
     }
 
+	@Override
+	protected void onConfigRequest(MiningConfigRequest request) {
+		LOGGER.warn("Pool {} received an Config request. This should not happen.", pool.getName());
+	}
+
     @Override
     protected void onExtranonceSubscribeRequest(MiningExtranonceSubscribeRequest request) {
         LOGGER.warn("Pool {} received an Extranonce Subscribe request. This should not happen.", pool.getName());
@@ -151,5 +158,9 @@ public class PoolConnection extends StratumConnection {
     protected void onGetVersionResponse(ClientGetVersionRequest request, ClientGetVersionResponse response) {
         LOGGER.warn("Pool {} received a GetVersion response. This should not happen.", pool.getName());
     }
+	@Override
+	protected void onConfigResponse(MiningConfigRequest request, MiningConfigResponse response) {
+		LOGGER.warn("Pool {} received a Config response. This should not happen.", pool.getName());
+	}
 
 }

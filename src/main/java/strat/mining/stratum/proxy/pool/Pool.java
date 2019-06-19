@@ -624,6 +624,7 @@ public class Pool {
         poolRequest.setJobId(workerRequest.getJobId());
         poolRequest.setNonce(workerRequest.getNonce());
         poolRequest.setNtime(workerRequest.getNtime());
+		poolRequest.setVersion(workerRequest.getVersion());
 
         if (isAppendWorkerNames) {
             poolRequest.setWorkerName((username == null ? "" : username) + (workerSeparator == null ? "" : workerSeparator)

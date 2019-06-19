@@ -20,6 +20,8 @@ package strat.mining.stratum.proxy.json;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -27,7 +29,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MiningSuggestDifficultyRequest extends JsonRpcRequest {
 
-    public static final String METHOD_NAME = "mining.suggest_difficulty";
+    //public static final String METHOD_NAME = "mining.suggest_difficulty";
+    public static final String METHOD_NAME = "mining.configure";
 
     @JsonIgnore
     private Double suggestedDifficulty;
@@ -53,7 +56,15 @@ public class MiningSuggestDifficultyRequest extends JsonRpcRequest {
         if (super.getParams() == null) {
             ArrayList<Object> params = new ArrayList<Object>();
             super.setParams(params);
-            params.add(suggestedDifficulty);
+            //params.add(suggestedDifficulty);     
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("minimum-difficulty.value", 32768);
+			map.put("version-rolling.mask", "ffffffff");
+			map.put("version-rolling.min-bit-count", 2);
+			ArrayList<Object> rolling = new ArrayList<Object>();
+			rolling.add("version-rolling");
+			params.add(rolling);	
+			params.add(map);
         }
         return super.getParams();
     }
